@@ -64,28 +64,19 @@ $(document).ready(function () {
             }
         })
         // ------------------------------------
-        var newRow = $("<tr>")
-        var rowHeader = $("<th>").attr("scope", "row")
-        rowHeader.text(trainName);
-        var newData1 = $("<td>")
-        newData1.text(destination)
-        var newData2 = $("<td>")
-        newData2.text(newFreq)
-        var newData3 = $("<td>")
-        newData3.text(nextStop)
-        var newData4 = $("<td>")
-        newData4.text(tMinutesTillTrain)
-
-        // code for putting data in the table
-        newRow.append(rowHeader, newData1, newData2, newData3, newData4)
-
-        // appending to the table
-        $("#trainTable").append(newRow)
+       
 
     })
     database.ref().on("child_added", function (childSnapshot) {
         console.log(childSnapshot.val());
         
+        $("#trainTable").append("<tr><th scope='row'> " +
+        childSnapshot.val().trainData.trainName +
+        " </th><td> " + childSnapshot.val().trainData.destination +
+        " </td><td> " + childSnapshot.val().trainData.frequency +
+        " </td><td> " + childSnapshot.val().trainData.nextTrain +
+        " </td><td> " + childSnapshot.val().trainData.minutesTillTrain +
+        " </td></tr>");
     }, function (errorObject) {
         console.log("Errors handled: " + errorObject.code);
     });
